@@ -113,8 +113,18 @@ function memoize(func) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  return () => {
+    while (attempts > 0) {
+      try {
+        return func();
+      } catch (err) {
+        // eslint-disable-next-line no-param-reassign
+        attempts -= 1;
+      }
+    }
+    return new Error();
+  };
 }
 
 
@@ -141,8 +151,16 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  return (...args) => {
+    const arg = JSON.stringify(args).slice(1, -1);
+    const en = `${func.name}(${arg}) ends`;
+    const st = `${func.name}(${arg}) starts`;
+    logFunc(st);
+    const res = func(...args);
+    logFunc(en);
+    return res;
+  };
 }
 
 

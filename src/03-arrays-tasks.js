@@ -207,10 +207,10 @@ function getTail(arr, n) {
  *    +'20,21,22,23,24\n'
  *    +'30,31,32,33,34'
  */
-function toCsvText(/* arr */) {
-  throw new Error('Not implemented');
+function toCsvText(arr) {
+  const ar = arr.map((el) => `${el.join(',')}\n`).join('');
+  return ar.slice(0, ar.length - 1);
 }
-
 /**
  * Transforms the numeric array into the according array of squares:
  *   f(x) = x * x
@@ -615,8 +615,11 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const leng = Math.floor(arr.length / 2);
+  const t = arr.splice(arr.length - leng);
+  const h = arr.splice(0, leng);
+  return [...t, ...arr, ...h];
 }
 
 
